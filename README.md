@@ -1,1 +1,1 @@
-Static Blos site using Jekyll
+Static Blog site using Jekyll
