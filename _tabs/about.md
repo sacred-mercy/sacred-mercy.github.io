@@ -8,4 +8,4 @@ Hello! I'm Gaurav. I love to explore system design and computer science. The ide
 Happy to connect on email, twitter & Github.
 
 You can find the source code for this website at GitHub:
-[blogs](https://github.com/sacred-mercy/blogs)
+[blogs](https://github.com/sacred-mercy/sacred-mercy.github.io)
