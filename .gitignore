@@ -30,6 +30,7 @@ pnpm-debug.log*
 Thumbs.db
 
 # bun
+bun.lock
 bun.lockb
 .bun-cache/
 
