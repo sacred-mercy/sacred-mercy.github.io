@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE, type Locale } from '~/config';
+import { localizedPath } from '~/i18n/utils';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const paths = [];
+  for (const locale of SITE.locales) {
+    for (const project of projects) {
+      paths.push({
+        params: {
+          locale: locale === SITE.defaultLocale ? undefined : locale,
+          slug: project.id,
+        },
+        props: { project, locale },
+      });
+    }
+  }
+  return paths;
+}
+
+const { project, locale } = Astro.props;
+const { Content, headings } = await render(project);
+const tocHeadings = headings.filter((h) => h.depth <= 3);
+---
+
+<BaseLayout
+  title={project.data.title}
+  description={project.data.description}
+  pathWithoutLocale={`/projects/${project.id}/`}
+  crumbs={[
+    { label: 'Projects', href: localizedPath('/projects/', locale) },
+    { label: project.data.title },
+  ]}
+>
+  <article>
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold tracking-tight">{project.data.title}</h1>
+      <p class="text-base-content/70 mt-2">{project.data.description}</p>
+
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        {project.data.tags.map((tag: string) => (
+          <span class="post-tag">{tag}</span>
+        ))}
+      </div>
+
+      <div class="mt-4 flex items-center gap-4 text-sm">
+        {project.data.url && (
+          <a
+            href={project.data.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary inline-flex items-center gap-1.5 hover:underline"
+          >
+            <Icon name="lucide:external-link" width={16} height={16} />
+            Live Demo
+          </a>
+        )}
+        {project.data.repo && (
+          <a
+            href={project.data.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary inline-flex items-center gap-1.5 hover:underline"
+          >
+            <Icon name="lucide:github" width={16} height={16} />
+            Source Code
+          </a>
+        )}
+      </div>
+    </header>
+
+    {tocHeadings.length > 2 && (
+      <nav class="toc mb-6">
+        <div class="toc-title">Table of Contents</div>
+        <ul>
+          {tocHeadings.map((h) => (
+            <li style={`margin-left: ${(h.depth - 2) * 1.2}em`}>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <div class="prose-chirpy">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

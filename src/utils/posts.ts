@@ -119,13 +119,17 @@ export async function getTranslations(entry: Post): Promise<Record<Locale, Post 
   return out as Record<Locale, Post | undefined>;
 }
 
-/** Tags for a locale, with counts, sorted by count desc then alpha. */
+/** Tags for a locale, with counts, sorted by count desc then alpha. Includes project tags. */
 export async function getTagsWithCount(
   locale: Locale,
 ): Promise<Array<{ name: string; count: number }>> {
   const posts = await getPosts(locale);
   const map = new Map<string, number>();
   for (const p of posts) {
+    for (const t of p.data.tags) map.set(t, (map.get(t) ?? 0) + 1);
+  }
+  const projects = await getCollection('projects');
+  for (const p of projects) {
     for (const t of p.data.tags) map.set(t, (map.get(t) ?? 0) + 1);
   }
   return Array.from(map.entries())

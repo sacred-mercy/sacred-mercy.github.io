@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
+import { SITE, type Locale } from '~/config';
+
+export function getStaticPaths() {
+  return SITE.locales.map((l) => ({
+    params: { locale: l === SITE.defaultLocale ? undefined : l },
+    props: { locale: l },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout title="Projects" description="Side projects and experiments." pathWithoutLocale="/projects">
+  {
+    projects.length === 0 ? (
+      <p class="text-base-content/70">No projects yet.</p>
+    ) : (
+      projects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          tags={project.data.tags}
+          slug={project.id}
+          url={project.data.url}
+        />
+      ))
+    )
+  }
+</BaseLayout>

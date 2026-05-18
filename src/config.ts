@@ -25,10 +25,10 @@ export type Locale = (typeof locales)[number];
  * automatically — the entry won't render and no broken `your-handle`
  * URL is exposed.
  */
-const GITHUB_HANDLE = import.meta.env.PUBLIC_GITHUB_HANDLE ?? '';
-const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO ?? 'chirping-astro';
-const TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE ?? '';
-const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL ?? '';
+const GITHUB_HANDLE = import.meta.env.PUBLIC_GITHUB_HANDLE || 'sacred-mercy';
+const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO || 'sacred-mercy.github.io';
+const TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE || 'GauravSingh9634';
+const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL || 'gauravnegi9634@gmail.com';
 const THEME_REPO_URL = 'https://github.com/kannansuresh/chirping-astro';
 
 /**
@@ -105,7 +105,7 @@ export const SITE: SiteConfig = {
   /** Public URL of the deployed site, no trailing slash. Breaks SEO/RSS if incorrect. */
   // `||` (not `??`) so an explicitly empty `SITE_URL=` in `.env` also
   // falls back to the default. Astro requires `site` to be a valid URL.
-  url: import.meta.env.SITE_URL || 'https://chirping-astro.example.com',
+  url: import.meta.env.SITE_URL || 'https://gauravnegi.in',
   /** Supported locales. Changing this requires adding/removing locale folders, content, and i18n entries. */
   locales: locales,
   /** Default locale. Changing this is a breaking, atomic, multi-file operation. */
@@ -119,6 +119,7 @@ export const NAV: readonly NavItem[] = [
   { key: 'categories', href: '/categories', icon: 'lucide:layers' },
   { key: 'tags', href: '/tags', icon: 'lucide:tag' },
   { key: 'archives', href: '/archives', icon: 'lucide:archive' },
+  { key: 'projects', href: '/projects', icon: 'lucide:laptop' },
   { key: 'about', href: '/about', icon: 'lucide:info' },
 ] as const;
 

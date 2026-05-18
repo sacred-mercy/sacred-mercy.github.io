@@ -14,6 +14,7 @@ export const messages = {
     'nav.tags': 'Tags',
     'nav.categories': 'Categories',
     'nav.archives': 'Archives',
+    'nav.projects': 'Projects',
     'nav.about': 'About',
     'nav.search': 'Search',
     'nav.toggleMenu': 'Toggle menu',

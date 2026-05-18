@@ -1,0 +1,45 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  slug: string;
+  url?: string;
+}
+
+const { title, description, tags, slug, url } = Astro.props;
+const href = `/projects/${slug}/`;
+---
+
+<article class="chirpy-card">
+  <a href={href} class="chirpy-card-link no-image fixed-size">
+    <div class="chirpy-card-body full">
+      <h2 class="chirpy-card-title compact">{title}</h2>
+
+      <p class="text-base-content/70 mt-1 mb-3 text-base line-clamp-3">
+        {description}
+      </p>
+
+      <div class="text-base-content/70 mt-3 flex items-end justify-between gap-2 text-xs">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+          {
+            tags.length > 0 &&
+              tags.map((tag) => (
+                <span class="post-tag">{tag}</span>
+              ))
+          }
+        </div>
+        {
+          url && (
+            <span class="text-primary inline-flex items-center gap-1">
+              <Icon name="lucide:external-link" width={12} height={12} />
+              Demo
+            </span>
+          )
+        }
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,7 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import { SITE } from '~/config';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import PostList from '~/components/PostList.astro';
+import ProjectCard from '~/components/ProjectCard.astro';
 import { useTranslations, localizedPath } from '~/i18n/utils';
 import { getPosts, getTagsWithCount, slugify } from '~/utils/posts';
 
@@ -29,6 +31,10 @@ const { tagName, locale } = Astro.props as Props;
 const { tag } = Astro.params;
 const t = useTranslations(locale);
 const posts = (await getPosts(locale)).filter((p) => p.data.tags.some((tg) => slugify(tg) === tag));
+const projects = (await getCollection('projects')).filter((p) =>
+  p.data.tags.some((tg: string) => slugify(tg) === tag),
+);
+const totalCount = posts.length + projects.length;
 ---
 
 <BaseLayout
@@ -43,9 +49,26 @@ const posts = (await getPosts(locale)).filter((p) => p.data.tags.some((tg) => sl
     <p class="text-base-content/70 text-sm tracking-wide uppercase">{t('list.tagPosts')}</p>
     <h1 class="text-3xl font-bold tracking-tight">#{tagName}</h1>
     <p class="text-base-content/70 mt-1 text-sm">
-      {posts.length}
-      {posts.length === 1 ? t('list.totalPostsOne') : t('list.totalPosts')}
+      {totalCount}
+      {totalCount === 1 ? t('list.totalPostsOne') : t('list.totalPosts')}
     </p>
   </header>
+
   <PostList posts={posts} locale={locale} />
+
+  {
+    projects.length > 0 && (
+      <div class="mt-2">
+        {projects.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            tags={project.data.tags}
+            slug={project.id}
+            url={project.data.url}
+          />
+        ))}
+      </div>
+    )
+  }
 </BaseLayout>

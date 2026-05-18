@@ -3,7 +3,7 @@ title: "Syncing Strapi V5 Content Across Environments"
 description: "A guide to syncing schemas, content, nested components, and locales between Strapi V5 environments."
 pubDate: 2026-01-07
 categories: [Strapi]
-tags: [strapi, cms, api, sync]
+tags: [strapi, cms, sync]
 ---
 
 Strapi is a powerful headless CMS, but moving data between development, staging, and production environments can be tricky. Broadly speaking, there are two types of "syncing" you need to handle: **Schema Syncing** (how your content is structured) and **Content Syncing** (the actual data).
