@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && bun run pagefind",
+    "build": "astro build && npm run pagefind && cp dist/sitemap-index.xml dist/sitemap.xml",
     "preview": "astro preview",
     "serve": "bun run build && bun preview",
     "astro": "astro",
