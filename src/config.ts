@@ -1,4 +1,4 @@
-import avatarImg from './assets/images/site/avatar.svg';
+import avatarImg from './assets/images/site/avatar.jpg';
 import ogDefaultImg from './assets/images/site/og-default.svg';
 import type { SiteConfig, NavItem, SocialLink, GiscusConfig } from './types/config';
 
@@ -28,6 +28,7 @@ export type Locale = (typeof locales)[number];
 const GITHUB_HANDLE = import.meta.env.PUBLIC_GITHUB_HANDLE || 'sacred-mercy';
 const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO || 'sacred-mercy.github.io';
 const TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE || 'GauravSingh9634';
+const INSTAGRAM_HANDLE = import.meta.env.PUBLIC_INSTAGRAM_HANDLE || 'gaurav_singh.negi';
 const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL || 'gauravnegi9634@gmail.com';
 const THEME_REPO_URL = 'https://github.com/kannansuresh/chirping-astro';
 
@@ -49,13 +50,13 @@ export const SITE: SiteConfig = {
   // ==========================================
 
   /** Default site title used as homepage <title> and meta. */
-  title: 'Gaurav Negi',
+  title: 'Gaurav Singh',
   /** Site tagline / description. */
   description:
     'Software developer with experience in backend development. Primary Tech stack - PHP 8, Laravel, Kafka, Microservices, MongoDB, Postgres, Redis.',
   /** Author/handle shown in footer + meta. */
   author: {
-    name: 'Gaurav Negi',
+    name: 'Gaurav Singh',
     url: GITHUB_HANDLE ? `https://github.com/${GITHUB_HANDLE}` : undefined,
     avatar: avatarImg,
     bio: 'Backend Developer',
@@ -127,7 +128,7 @@ export const NAV: readonly NavItem[] = [
  * SOCIALS is built from the env-driven handles above so users only edit
  * one place (`.env` or the constants at the top of this file). Empty
  * handles are filtered out automatically — the icon simply won't appear
- * in the sidebar. RSS is always present.
+ * in the sidebar.
  *
  * Need a social network the theme doesn't ship with? Just append a
  * literal entry below — the type is `SocialLink`.
@@ -153,7 +154,11 @@ export const SOCIALS: readonly SocialLink[] = [
     href: 'https://www.linkedin.com/in/gaurav-singh-gs',
     icon: 'simple-icons:linkedin',
   },
-  { label: 'RSS', href: '/rss.xml', icon: 'lucide:rss' },
+  INSTAGRAM_HANDLE && {
+    label: 'Instagram',
+    href: `https://www.instagram.com/${INSTAGRAM_HANDLE}/`,
+    icon: 'simple-icons:instagram',
+  },
 ].filter(Boolean) as SocialLink[];
 
 /**
